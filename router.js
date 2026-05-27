@@ -324,7 +324,7 @@ const Manual = {
         <h1>User Manual</h1>
 
         <p>
-          This simulator demonstrates the basic behavior of a single quantum bit (qubit).
+          This simulator demonstrates the basic behavior of 2 quantum bits (qubits).
         </p>
 
         <p>
