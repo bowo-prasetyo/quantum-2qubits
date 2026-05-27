@@ -7,10 +7,10 @@ const Home = {
       </div>
       
       <div class="card">
-        <h1>1 Qubit Quantum Simulator</h1>
+        <h1>2 Qubits Quantum Simulator</h1>
 
         <p>
-          Minimal quantum computer simulator that demonstrates the basic behavior of a single quantum bit (qubit).
+          Minimal quantum computer simulator that demonstrates the basic behavior of 2 quantum bits (qubits).
         </p>
       </div>
 
