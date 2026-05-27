@@ -354,55 +354,68 @@ const Manual = {
         <button @click="$router.push('/')">Simulator</button>
         <button @click="$router.push('/manual')">User Manual</button>
       </div>
-
+      
       <div class="card">
         <h1>User Manual</h1>
-
+      
         <p>
-          This simulator demonstrates the basic behavior of 2 quantum bits (qubits).
+          This simulator demonstrates the basic behavior of a 2-qubit quantum computer.
         </p>
-
+      
         <p>
-          Unlike a classical bit that is only 0 or 1,
-          a qubit can exist in a quantum superposition of both states.
+          Unlike classical bits that can only be 0 or 1,
+          quantum bits (qubits) can exist in superposition and can also become entangled.
         </p>
+      
+        <p>
+          The simulator allows you to experiment with:
+        </p>
+      
+        <ul>
+          <li>Single-qubit gates</li>
+          <li>Quantum superposition</li>
+          <li>Quantum phase</li>
+          <li>Measurement collapse</li>
+          <li>Two-qubit entanglement</li>
+          <li>Bell states</li>
+          <li>CNOT operations</li>
+        </ul>
       </div>
       
       <div class="card">
         <h2>Use Case 1 — Classical Bit Flip</h2>
       
         <p>
-          This demonstrates how some quantum operations can behave similarly
-          to ordinary classical logic gates.
+          This demonstrates how some quantum gates behave similarly
+          to ordinary classical logic operations.
         </p>
       
         <p><strong>Objective:</strong></p>
       
         <p>
-          Understand how the Pauli-X gate flips the qubit state,
-          similar to a classical NOT operation.
+          Understand how the Pauli-X gate flips a qubit state.
         </p>
       
         <p><strong>Why This Matters:</strong></p>
       
         <p>
-          Quantum computers still perform operations that resemble classical logic,
-          but they do so using quantum mathematics.
+          Quantum computers still contain operations resembling classical logic,
+          but implemented using quantum mathematics.
         </p>
       
         <p><strong>Steps:</strong></p>
       
         <ol>
           <li>Press Reset</li>
-          <li>Press Pauli-X</li>
+          <li>Press X on Qubit 0</li>
           <li>Press Measure</li>
         </ol>
       
         <p><strong>Expected Result:</strong></p>
       
         <p>
-          The measurement consistently becomes 1 because
-          Pauli-X transforms |0⟩ into |1⟩.
+          The measurement frequently becomes |10⟩ because
+          qubit 0 was flipped from 0 to 1.
         </p>
       </div>
       
@@ -417,34 +430,34 @@ const Manual = {
         <p><strong>Objective:</strong></p>
       
         <p>
-          Observe how a qubit can mathematically exist in both |0⟩ and |1⟩ simultaneously.
+          Observe how a qubit can mathematically exist in multiple states simultaneously.
         </p>
       
         <p><strong>Why This Matters:</strong></p>
       
         <p>
           Superposition allows quantum computers to process information
-          differently from classical computers.
+          differently from classical systems.
         </p>
       
         <p><strong>Steps:</strong></p>
       
         <ol>
           <li>Press Reset</li>
-          <li>Press Hadamard (H)</li>
-          <li>Press Measure, then repeat 2 &rarr; 3</li>
+          <li>Press H on Qubit 0</li>
+          <li>Press Measure repeatedly</li>
         </ol>
       
         <p><strong>Expected Result:</strong></p>
       
         <p>
-          Measurements randomly become either 0 or 1
+          Measurements randomly become either |00⟩ or |10⟩
           with approximately equal probability.
         </p>
       </div>
-
+      
       <div class="card">
-        <h2>Use Case 3 — Quantum Collapse</h2>
+        <h2>Use Case 3 — Quantum Measurement Collapse</h2>
       
         <p>
           This demonstrates how quantum measurement changes the quantum state itself.
@@ -460,14 +473,14 @@ const Manual = {
       
         <p>
           In quantum mechanics, observation is not passive.
-          Measuring a qubit forces it into a definite classical state.
+          Measuring the system forces it into one classical state.
         </p>
       
         <p><strong>Steps:</strong></p>
       
         <ol>
           <li>Press Reset</li>
-          <li>Press Hadamard (H)</li>
+          <li>Press H on Qubit 0</li>
           <li>Press Measure</li>
           <li>Press Measure again</li>
         </ol>
@@ -476,15 +489,15 @@ const Manual = {
       
         <p>
           The second measurement usually matches the first because
-          the first measurement already collapsed the quantum state.
+          the quantum state already collapsed.
         </p>
       </div>
-
+      
       <div class="card">
-        <h2>Use Case 4 — Double Hadamard</h2>
+        <h2>Use Case 4 — Double Hadamard Reversibility</h2>
       
         <p>
-          This demonstrates reversible quantum operations.
+          This demonstrates reversible quantum computation.
         </p>
       
         <p><strong>Objective:</strong></p>
@@ -497,7 +510,7 @@ const Manual = {
         <p><strong>Why This Matters:</strong></p>
       
         <p>
-          Many quantum operations are reversible,
+          Most quantum operations are reversible,
           unlike many ordinary classical processes.
         </p>
       
@@ -505,15 +518,167 @@ const Manual = {
       
         <ol>
           <li>Press Reset</li>
-          <li>Press Hadamard (H)</li>
-          <li>Press Hadamard (H) again</li>
+          <li>Press H on Qubit 0</li>
+          <li>Press H on Qubit 0 again</li>
           <li>Press Measure</li>
         </ol>
       
         <p><strong>Expected Result:</strong></p>
       
         <p>
-          The qubit returns to the original |0⟩ state.
+          The system returns to the original |00⟩ state.
+        </p>
+      </div>
+      
+      <div class="card">
+        <h2>Use Case 5 — Quantum Phase Rotation</h2>
+      
+        <p>
+          This demonstrates phase-changing quantum operations.
+        </p>
+      
+        <p><strong>Objective:</strong></p>
+      
+        <p>
+          Observe how Z, S, and T gates modify quantum phase
+          without directly changing probabilities immediately.
+        </p>
+      
+        <p><strong>Why This Matters:</strong></p>
+      
+        <p>
+          Quantum phase is essential for interference,
+          quantum algorithms,
+          and entanglement behavior.
+        </p>
+      
+        <p><strong>Steps:</strong></p>
+      
+        <ol>
+          <li>Press Reset</li>
+          <li>Press H on Qubit 0</li>
+          <li>Press Z, S, or T</li>
+          <li>Observe probability changes after further operations</li>
+        </ol>
+      
+        <p><strong>Expected Result:</strong></p>
+      
+        <p>
+          Some gates mainly affect quantum phase internally,
+          influencing later measurements and interference.
+        </p>
+      </div>
+      
+      <div class="card">
+        <h2>Use Case 6 — Bell State Creation</h2>
+      
+        <p>
+          This demonstrates quantum entanglement.
+        </p>
+      
+        <p><strong>Objective:</strong></p>
+      
+        <p>
+          Create one of the most famous entangled quantum states:
+          a Bell state.
+        </p>
+      
+        <p><strong>Why This Matters:</strong></p>
+      
+        <p>
+          Entanglement is one of the defining features of quantum computing
+          and enables many quantum algorithms and protocols.
+        </p>
+      
+        <p><strong>Steps:</strong></p>
+      
+        <ol>
+          <li>Press Reset</li>
+          <li>Press H on Qubit 0</li>
+          <li>Press CNOT</li>
+          <li>Press Measure repeatedly</li>
+        </ol>
+      
+        <p><strong>Expected Result:</strong></p>
+      
+        <p>
+          Measurements become either |00⟩ or |11⟩,
+          but rarely |01⟩ or |10⟩.
+          This indicates entanglement.
+        </p>
+      </div>
+      
+      <div class="card">
+        <h2>Use Case 7 — Controlled Operations</h2>
+      
+        <p>
+          This demonstrates conditional quantum logic using the CNOT gate.
+        </p>
+      
+        <p><strong>Objective:</strong></p>
+      
+        <p>
+          Observe how one qubit can control another qubit's behavior.
+        </p>
+      
+        <p><strong>Why This Matters:</strong></p>
+      
+        <p>
+          Controlled operations are fundamental building blocks
+          of quantum circuits and quantum algorithms.
+        </p>
+      
+        <p><strong>Steps:</strong></p>
+      
+        <ol>
+          <li>Press Reset</li>
+          <li>Press X on Qubit 0</li>
+          <li>Press CNOT</li>
+          <li>Press Measure</li>
+        </ol>
+      
+        <p><strong>Expected Result:</strong></p>
+      
+        <p>
+          The target qubit flips conditionally,
+          producing the |11⟩ state.
+        </p>
+      </div>
+      
+      <div class="card">
+        <h2>Use Case 8 — Probability Visualization</h2>
+      
+        <p>
+          This demonstrates how quantum probabilities are distributed
+          across multiple basis states.
+        </p>
+      
+        <p><strong>Objective:</strong></p>
+      
+        <p>
+          Learn how probability bars represent quantum amplitudes.
+        </p>
+      
+        <p><strong>Why This Matters:</strong></p>
+      
+        <p>
+          Quantum systems do not store single classical values.
+          Instead, they maintain probability amplitudes for many states simultaneously.
+        </p>
+      
+        <p><strong>Steps:</strong></p>
+      
+        <ol>
+          <li>Press Reset</li>
+          <li>Apply various gates</li>
+          <li>Observe the probability bars</li>
+        </ol>
+      
+        <p><strong>Expected Result:</strong></p>
+      
+        <p>
+          Different basis states gain or lose probability
+          depending on the applied quantum operations.
         </p>
       </div>
 
