@@ -65,26 +65,47 @@ const Home = {
 
         <p>Measurement: {{ measurement }}</p>
       </div>
-
+      
       <div class="card">
         <h2>Quantum Concepts</h2>
       
         <p>
           <strong>Quantum State</strong><br>
-          The current mathematical state of the qubit.
-          A qubit can exist in a combination of |0⟩ and |1⟩ simultaneously.
+          The current mathematical state of the quantum system.
+          In a 2-qubit system, the state may contain combinations of:
+          |00⟩, |01⟩, |10⟩, and |11⟩ simultaneously.
+        </p>
+      
+        <p>
+          <strong>Superposition</strong><br>
+          A quantum system can exist in multiple basis states at the same time.
+          Measuring the system collapses it into one classical result.
+        </p>
+      
+        <p>
+          <strong>Entanglement</strong><br>
+          Two qubits can become correlated in a way that classical systems cannot reproduce.
+          Measuring one qubit can instantly determine the other.
+        </p>
+      
+        <p>
+          <strong>Bell State</strong><br>
+          A famous entangled quantum state.
+          The simulator can generate:
+          (|00⟩ + |11⟩) / √2
+          using a Hadamard gate followed by a CNOT gate.
         </p>
       
         <p>
           <strong>Identity Gate (I)</strong><br>
-          Does nothing to the qubit.
-          It leaves the quantum state unchanged.
+          Does nothing to the selected qubit.
+          The quantum state remains unchanged.
         </p>
       
         <p>
           <strong>Hadamard Gate (H)</strong><br>
           Creates superposition.
-          It transforms a definite state into a 50/50 quantum mixture.
+          It transforms a definite classical state into a quantum mixture.
         </p>
       
         <p>
@@ -96,36 +117,50 @@ const Home = {
         <p>
           <strong>Pauli-Y Gate (Y)</strong><br>
           Rotates the qubit using complex quantum phase.
-          It flips the state while also introducing imaginary components.
+          It flips the state while introducing imaginary-number amplitudes.
         </p>
       
         <p>
           <strong>Pauli-Z Gate (Z)</strong><br>
-          Changes the quantum phase.
-          Unlike Pauli-X, it does not flip probabilities directly.
+          Changes the quantum phase without directly flipping probabilities.
+          This affects interference behavior in later operations.
         </p>
       
         <p>
           <strong>Phase Gate (S)</strong><br>
-          Applies a 90-degree quantum phase shift.
-          It is commonly used in quantum interference operations.
+          Applies a 90-degree quantum phase rotation.
+          It is commonly used in interference and phase-control operations.
         </p>
       
         <p>
           <strong>π/8 Gate (T)</strong><br>
-          Applies a smaller 45-degree quantum phase shift.
-          This gate is very important in universal quantum computing.
+          Applies a smaller 45-degree phase rotation.
+          This gate is important in universal and fault-tolerant quantum computing.
+        </p>
+      
+        <p>
+          <strong>CNOT Gate</strong><br>
+          A two-qubit gate that conditionally flips the target qubit.
+          It is one of the most important gates for creating entanglement.
+        </p>
+      
+        <p>
+          <strong>Probability Bars</strong><br>
+          The visualization shows probabilities for:
+          |00⟩, |01⟩, |10⟩, and |11⟩.
+          Taller bars indicate higher measurement probability.
         </p>
       
         <p>
           <strong>Measure</strong><br>
-          Observes the qubit.
-          Superposition collapses into either |0⟩ or |1⟩.
+          Observes the quantum system.
+          Superposition collapses into one classical basis state.
         </p>
       
         <p>
           <strong>Measurement</strong><br>
-          Shows the latest observed classical result after measurement.
+          Shows the latest observed classical result such as:
+          |00⟩, |01⟩, |10⟩, or |11⟩.
         </p>
       </div>
     </div>
