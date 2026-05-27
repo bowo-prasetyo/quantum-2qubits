@@ -4,7 +4,7 @@ A minimal client-side quantum computer simulator built with modern browser techn
 
 The application demonstrates the fundamental behavior of a 2 qubits quantum computer directly inside the browser without requiring any backend server.
 
-The simulator now includes a true Bloch sphere renderer for visualizing quantum states geometrically in 3D-inspired space.
+The simulator now includes a Probability Bars to show probabilities for: |00⟩, |01⟩, |10⟩, and |11⟩.
 
 ## Live Demo
 
