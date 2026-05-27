@@ -78,9 +78,9 @@ function applySingleQubitGate(state, gate, targetQubit) {
 
   for (let i = 0; i < 4; i++) {
 
-    if (((i >> targetQubit) & 1) === 0) {
-
-      const j = i | (1 << targetQubit);
+    if (((i >> (1 - targetQubit)) & 1) === 0) {
+      
+      const j = i | (1 << (1 - targetQubit));
 
       const a = state[i];
       const b = state[j];
