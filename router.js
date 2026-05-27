@@ -445,7 +445,7 @@ const Manual = {
         <ol>
           <li>Press Reset</li>
           <li>Press H on Qubit 0</li>
-          <li>Press Measure repeatedly</li>
+          <li>Press Measure, then repeat 2 &rarr; 3</li>
         </ol>
       
         <p><strong>Expected Result:</strong></p>
@@ -596,7 +596,7 @@ const Manual = {
           <li>Press Reset</li>
           <li>Press H on Qubit 0</li>
           <li>Press CNOT</li>
-          <li>Press Measure repeatedly</li>
+          <li>Press Measure, then repeat 1 &rarr; 2 &rarr; 3 &rarr; 4</li>
         </ol>
       
         <p><strong>Expected Result:</strong></p>
