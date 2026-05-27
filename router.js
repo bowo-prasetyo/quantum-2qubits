@@ -568,46 +568,77 @@ const Manual = {
           influencing later measurements and interference.
         </p>
       </div>
-      
+
       <div class="card">
-        <h2>Use Case 6 — Bell State Creation</h2>
-      
-        <p>
-          This demonstrates quantum entanglement.
-        </p>
-      
-        <p><strong>Objective:</strong></p>
-      
-        <p>
-          Create one of the most famous entangled quantum states:
-          a Bell state.
-        </p>
-      
-        <p><strong>Why This Matters:</strong></p>
-      
-        <p>
-          Entanglement is one of the defining features of quantum computing
-          and enables many quantum algorithms and protocols.
-        </p>
-      
-        <p><strong>Steps:</strong></p>
-      
-        <ol>
-          <li>Press Reset</li>
-          <li>Press H on Qubit 0</li>
-          <li>Press CNOT</li>
-          <li>Press Measure, then repeat 1 &rarr; 2 &rarr; 3 &rarr; 4</li>
-        </ol>
-      
-        <p><strong>Expected Result:</strong></p>
-      
-        <p>
-          Measurements become either |00⟩ or |11⟩,
-          but rarely |01⟩ or |10⟩.
-          This indicates entanglement.
-        </p>
-      </div>
-      
+  <h2>Use Case 6 — Bell State Creation</h2>
+
+  <p>
+    This demonstrates quantum entanglement.
+  </p>
+
+  <p><strong>What Is Entanglement?</strong></p>
+
+  <p>
+    Entanglement happens when two qubits become strongly connected.
+    After entanglement, measuring one qubit affects the overall system
+    and reveals information about the other qubit as well.
+  </p>
+
+  <p>
+    In this simulator, the two qubits become linked so that
+    they tend to produce matching measurement results.
+  </p>
+
+  <p><strong>Objective:</strong></p>
+
+  <p>
+    Create one of the most famous entangled quantum states:
+    a Bell state.
+  </p>
+
+  <p><strong>Why This Matters:</strong></p>
+
+  <p>
+    Entanglement is one of the defining features of quantum computing
+    and enables many quantum algorithms and communication protocols.
+  </p>
+
+  <p>
+    Unlike ordinary classical systems,
+    entangled quantum systems behave as a single combined system
+    even when consisting of multiple qubits.
+  </p>
+
+  <p><strong>Steps:</strong></p>
+
+  <ol>
+    <li>Press Reset</li>
+    <li>Press H on Qubit 0</li>
+    <li>Press CNOT</li>
+    <li>Press Measure, then repeat 1 → 2 → 3 → 4</li>
+  </ol>
+
+  <p><strong>Expected Result:</strong></p>
+
+  <p>
+    Measurements become either |00⟩ or |11⟩,
+    while |01⟩ and |10⟩ rarely appear.
+  </p>
+
+  <p>
+    This happens because the two qubits became entangled
+    and now behave in a correlated way.
+  </p>
+
+  <p>
+    The generated Bell state is:
+  </p>
+
+  <p>
+    (|00⟩ + |11⟩) / √2
+  </p>
+</div>
+
       <div class="card">
         <h2>Use Case 7 — Controlled Operations</h2>
       
