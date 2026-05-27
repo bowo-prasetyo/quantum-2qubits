@@ -1,15 +1,15 @@
-# 1 Qubit Quantum Simulator
+# 2 Qubits Quantum Simulator
 
 A minimal client-side quantum computer simulator built with modern browser technologies.
 
-The application demonstrates the fundamental behavior of a single qubit quantum computer directly inside the browser without requiring any backend server.
+The application demonstrates the fundamental behavior of a 2 qubits quantum computer directly inside the browser without requiring any backend server.
 
 The simulator now includes a true Bloch sphere renderer for visualizing quantum states geometrically in 3D-inspired space.
 
 ## Live Demo
 
-- Demo: https://bowo-prasetyo.github.io/quantum-1qubit/
-- Repository: https://github.com/bowo-prasetyo/quantum-1qubit/
+- Demo: https://bowo-prasetyo.github.io/quantum-2qubits/
+- Repository: https://github.com/bowo-prasetyo/quantum-2qubits/
 
 ---
 
@@ -27,6 +27,11 @@ The simulator now includes a true Bloch sphere renderer for visualizing quantum 
 - Beginner-friendly quantum explanations
 - Quantum state persistence across browser refreshes
 - Real-time quantum state visualization
+- Bell states
+- CNOT gate
+- Entanglement
+- Probability visualization
+
 
 ---
 
