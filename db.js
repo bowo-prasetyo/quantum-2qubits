@@ -1,4 +1,4 @@
-const DB_NAME = 'quantum-db';
+const DB_NAME = 'quantum-db-2';
 const STORE_NAME = 'states';
 const KEY = 'qubit';
 
