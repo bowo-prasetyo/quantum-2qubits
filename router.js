@@ -1,7 +1,7 @@
 const menu = `<div class="card">
         <button @click="$router.push('/')">Simulator</button>
         <button @click="$router.push('/manual')">User Manual</button>
-        <button @click="globalThis.open('https://bowo-prasetyo.github.io/quantum-1qubit/', '_blank')">1 Qubit</button>
+        <button @click="this.$globalThis.open('https://bowo-prasetyo.github.io/quantum-1qubit/', '_blank')">1 Qubit</button>
       </div>`;
 
 const Home = {
