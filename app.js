@@ -7,5 +7,8 @@ const app = Vue.createApp({
   template: `<router-view />`
 });
 
+// Bind global variables or functions
+app.config.globalProperties.$globalThis = globalThis
+
 app.use(router);
 app.mount('#app');
