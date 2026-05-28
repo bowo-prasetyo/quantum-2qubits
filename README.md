@@ -2,15 +2,26 @@
 
 A minimal client-side quantum computer simulator built with modern browser technologies.
 
-The application demonstrates the fundamental behavior of a 2 qubits quantum computer directly inside the browser without requiring any backend server.
+The application demonstrates the fundamental behavior of a 2-qubit quantum computer directly inside the browser without requiring any backend server.
 
-The simulator now includes a Probability Bars to show probabilities for: |00⟩, |01⟩, |10⟩, and |11⟩.
+The simulator supports:
+
+- Single-qubit gates
+- Two-qubit operations
+- Bell state generation
+- Quantum entanglement
+- Quantum measurement
+- Probability visualization
+
+The application is fully client-side and deployable on GitHub Pages.
+
+---
 
 ## Live Demo
 
 - Demo: https://bowo-prasetyo.github.io/quantum-2qubits/
 - Repository: https://github.com/bowo-prasetyo/quantum-2qubits/
-
+  
 ---
 
 ## Features
@@ -18,7 +29,6 @@ The simulator now includes a Probability Bars to show probabilities for: |00⟩,
 - Vue 3 CDN architecture
 - Vue Router multi-page navigation
 - Web Worker quantum computation
-- True Bloch sphere rendering
 - HTML Canvas visualization
 - IndexedDB persistence
 - GitHub Pages compatible
@@ -26,58 +36,115 @@ The simulator now includes a Probability Bars to show probabilities for: |00⟩,
 - Educational user manual
 - Beginner-friendly quantum explanations
 - Quantum state persistence across browser refreshes
-- Real-time quantum state visualization
-- Bell states
+- Real-time probability visualization
+- Single-qubit quantum gates
+- Two-qubit quantum states
+- Bell state generation
 - CNOT gate
-- Entanglement
-- Probability visualization
-
+- Entanglement demonstrations
+- Measurement collapse simulation
+- Probability bars for:
+  - |00⟩
+  - |01⟩
+  - |10⟩
+  - |11⟩
 
 ---
 
 ## Supported Quantum Gates
 
-The simulator currently supports the common single-qubit gates:
+### Single-Qubit Gates
 
 | Gate | Name | Description |
 |---|---|---|
-| I | Identity Gate | Leaves the qubit unchanged |
+| I | Identity Gate | Leaves the selected qubit unchanged |
 | H | Hadamard Gate | Creates quantum superposition |
 | X | Pauli-X Gate | Quantum NOT gate |
 | Y | Pauli-Y Gate | Quantum rotation using imaginary phase |
 | Z | Pauli-Z Gate | Quantum phase flip |
-| S | Phase Gate | 90° quantum phase shift |
-| T | π/8 Gate | 45° quantum phase shift |
+| S | Phase Gate | 90° quantum phase rotation |
+| T | π/8 Gate | 45° quantum phase rotation |
+
+### Two-Qubit Gates
+
+| Gate | Name | Description |
+|---|---|---|
+| CNOT | Controlled-NOT Gate | Conditionally flips the target qubit |
 
 ---
 
-## Bloch Sphere Visualization
+## Quantum State Representation
 
-The simulator visualizes the qubit using a Bloch sphere representation.
+The simulator represents a 2-qubit quantum system as:
 
-The Bloch sphere provides a geometric interpretation of a single qubit state:
+```text
+|ψ⟩ = α|00⟩ + β|01⟩ + γ|10⟩ + δ|11⟩
+```
 
-- North pole = |0⟩
-- South pole = |1⟩
-- Surface points = quantum superpositions
-- Rotations = quantum gate operations
+Where:
 
-The visualization now shows:
+- α, β, γ, and δ are complex probability amplitudes
+- The total probability must equal 1
 
-- Quantum phase
-- Complex amplitudes
-- State vector direction
-- Gate rotations
-- Superposition geometry
-- Phase-sensitive transformations
+Normalization rule:
 
-This makes phase gates such as:
+```text
+|α|² + |β|² + |γ|² + |δ|² = 1
+```
 
-- Pauli-Z
-- Phase (S)
-- π/8 (T)
+---
 
-visually observable through Bloch sphere rotations.
+## Probability Visualization
+
+The simulator visualizes measurement probabilities using probability bars.
+
+The bars represent:
+
+- |00⟩
+- |01⟩
+- |10⟩
+- |11⟩
+
+Taller bars indicate higher probability of measurement.
+
+This visualization helps users understand:
+
+- Superposition
+- Probability amplitudes
+- Entanglement behavior
+- Quantum gate effects
+- Measurement collapse
+
+---
+
+## Bell States And Entanglement
+
+The simulator can generate Bell states such as:
+
+```text
+(|00⟩ + |11⟩) / √2
+```
+
+using:
+
+1. Hadamard gate
+2. CNOT gate
+
+This creates quantum entanglement.
+
+Entangled qubits behave as a connected quantum system where measurements become correlated.
+
+Typical Bell-state measurements become:
+
+- |00⟩
+- |11⟩
+
+while:
+
+- |01⟩
+- |10⟩
+
+rarely appear.
 
 ---
 
@@ -86,6 +153,7 @@ visually observable through Bloch sphere rotations.
 The simulator demonstrates:
 
 - Qubit state representation
+- Two-qubit systems
 - Superposition
 - Quantum phase
 - Quantum measurement
@@ -94,9 +162,11 @@ The simulator demonstrates:
 - Complex-number amplitudes
 - Probability amplitudes
 - Quantum gate transformations
-- Bloch sphere geometry
-- Phase rotations
-- Geometric quantum state visualization
+- Bell states
+- Entanglement
+- Controlled quantum operations
+- Conditional logic
+- Probability distributions
 
 ---
 
@@ -109,7 +179,7 @@ The simulator demonstrates:
 - JavaScript ES Modules
 - [Vue.js](https://vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
-
+  
 ### Browser APIs
 
 - Web Workers
@@ -119,13 +189,13 @@ The simulator demonstrates:
 ### Deployment
 
 - [GitHub Pages](https://pages.github.com/)
-
+  
 ---
 
 ## Project Structure
 
 ```text
-quantum-1qubit/
+quantum-2qubits/
 ├── index.html
 ├── app.js
 ├── router.js
@@ -171,52 +241,6 @@ GitHub Pages will automatically deploy the application.
 
 ---
 
-## Quantum State Representation
-
-The qubit state is represented as:
-
-```text
-|ψ⟩ = α|0⟩ + β|1⟩
-```
-
-Where:
-
-- α and β are complex probability amplitudes
-- The total probability must equal 1
-
-Normalization rule:
-
-```text
-|α|² + |β|² = 1
-```
-
----
-
-## Bloch Sphere Mathematics
-
-A single qubit can also be represented geometrically as:
-
-```text
-|ψ⟩ = cos(θ/2)|0⟩ + e^(iφ) sin(θ/2)|1⟩
-```
-
-Where:
-
-- θ controls vertical position on the Bloch sphere
-- φ controls quantum phase rotation
-
-The simulator converts the quantum state into Bloch sphere coordinates:
-
-```text
-x = sin(θ) cos(φ)
-y = sin(θ) sin(φ)
-z = cos(θ)
-```
-
-These coordinates are projected onto the HTML Canvas renderer.
-
----
-
 ## Architecture
 
 ### Main Thread
@@ -224,8 +248,8 @@ These coordinates are projected onto the HTML Canvas renderer.
 Responsible for:
 
 - Vue UI rendering
-- Bloch sphere rendering
 - Canvas visualization
+- Probability rendering
 - Router navigation
 - IndexedDB persistence
 - User interaction
@@ -236,6 +260,7 @@ Responsible for:
 
 - Quantum gate computation
 - Matrix-vector multiplication
+- CNOT operations
 - Quantum measurement
 - State collapse
 
@@ -245,7 +270,7 @@ This separation keeps the UI responsive while performing quantum calculations.
 
 ## Persistence
 
-The simulator automatically saves the latest qubit state using IndexedDB.
+The simulator automatically saves the latest quantum state using IndexedDB.
 
 Refreshing the browser restores the previous quantum state automatically.
 
@@ -260,11 +285,11 @@ The included User Manual demonstrates:
 3. Quantum collapse
 4. Double Hadamard reversibility
 5. Quantum phase manipulation
-6. Identity operations
-7. Complex quantum rotation
-8. 90° phase shifting
-9. π/8 fine phase control
-10. Browser persistence
+6. Bell state creation
+7. Controlled operations using CNOT
+8. Probability visualization
+9. Entanglement behavior
+10. Measurement correlation
 
 ---
 
@@ -273,18 +298,18 @@ The included User Manual demonstrates:
 Possible future enhancements:
 
 - Animated gate transitions
-- Interactive camera rotation
-- Full 3D WebGL Bloch sphere
-- Multi-qubit simulation
-- Entanglement visualization
+- Interactive 3D visualization
+- Full WebGL quantum renderer
+- 3-qubit simulation
+- Entanglement graph visualization
 - Quantum circuit editor
+- Drag-and-drop gates
 - Quantum Fourier Transform
-- Bell state demonstrations
 - WebGPU acceleration
 - WASM math backend
 - OPFS binary snapshots
 - Noise and decoherence simulation
-- Probability histograms
+- Density matrix visualization
 - Quantum algorithm playground
 
 ---
@@ -292,6 +317,8 @@ Possible future enhancements:
 ## License
 
 MIT License
+
+---
 
 ## Assisted By
 
