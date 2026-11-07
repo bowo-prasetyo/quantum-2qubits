@@ -5,6 +5,36 @@ const menu = `<div class="card">
         <button @click="$globalThis.open('https://bowo-prasetyo.github.io/quantum-3qubits/', '_blank')">3 Qubits</button>
       </div>`;
 
+// A 2-qubit register has 2^2 = 4 complex amplitudes: |00⟩, |01⟩, |10⟩, |11⟩.
+const AMPLITUDE_COUNT = 4;
+
+function initialState() {
+  // |00⟩
+  return [
+    { re: 1, im: 0 },
+    { re: 0, im: 0 },
+    { re: 0, im: 0 },
+    { re: 0, im: 0 }
+  ];
+}
+
+// Guards against saved data that is missing, from an older version,
+// or has the wrong number of amplitudes.
+function isValidState(state) {
+  return Array.isArray(state) &&
+    state.length === AMPLITUDE_COUNT &&
+    state.every(a =>
+      a &&
+      Number.isFinite(a.re) &&
+      Number.isFinite(a.im)
+    );
+}
+
+// Basis index -> ket label, e.g. 2 -> '|10⟩' (qubit 0 is the left digit).
+function basisLabel(index) {
+  return '|' + index.toString(2).padStart(2, '0') + '⟩';
+}
+
 const Home = {
   template: `
     <div class="container">
@@ -109,7 +139,7 @@ const Home = {
         <p>
           <strong>Hadamard Gate (H)</strong><br>
           Creates superposition.
-          It transforms a definite classical state into a quantum mixture.
+          It turns a definite state such as |0⟩ into an equal superposition of |0⟩ and |1⟩.
         </p>
       
         <p>
@@ -172,10 +202,7 @@ const Home = {
 
   data() {
     return {
-      state: [
-        { re: 1, im: 0 },
-        { re: 0, im: 0 }
-      ],
+      state: initialState(),
       measurement: '-',
       worker: null
     };
@@ -206,7 +233,7 @@ const Home = {
       }
 
       if (msg.type === 'measurement') {
-        this.measurement = msg.measured;
+        this.measurement = basisLabel(msg.measured);
         this.state = msg.state;
       }
 
@@ -216,8 +243,11 @@ const Home = {
 
     const saved = await window.db.loadState();
 
-    if (saved) {
+    if (isValidState(saved)) {
       this.state = saved;
+    } else if (saved) {
+      // Discard unusable saved data and start from |00⟩.
+      await window.db.saveState(this.state);
     }
 
     this.draw();
@@ -269,18 +299,13 @@ const Home = {
     },
         
     async reset() {
-      this.state = [
-          { re: 1, im: 0 },
-          { re: 0, im: 0 },
-          { re: 0, im: 0 },
-          { re: 0, im: 0 }
-        ];
-      
-        this.measurement = '-';
-      
-        await window.db.saveState(this.state);
-      
-        this.draw();
+      this.state = initialState();
+
+      this.measurement = '-';
+
+      await window.db.saveState(this.state);
+
+      this.draw();
 
     },
 
@@ -415,7 +440,7 @@ const Manual = {
         <p><strong>Expected Result:</strong></p>
       
         <p>
-          The measurement frequently becomes |10⟩ because
+          The measurement always becomes |10⟩ because
           qubit 0 was flipped from 0 to 1.
         </p>
       </div>
@@ -489,7 +514,7 @@ const Manual = {
         <p><strong>Expected Result:</strong></p>
       
         <p>
-          The second measurement usually matches the first because
+          The second measurement always matches the first because
           the quantum state already collapsed.
         </p>
       </div>
@@ -587,7 +612,7 @@ const Manual = {
 
   <p>
     In this simulator, the two qubits become linked so that
-    they tend to produce matching measurement results.
+    they always produce matching measurement results.
   </p>
 
   <p><strong>Objective:</strong></p>
@@ -623,7 +648,7 @@ const Manual = {
 
   <p>
     Measurements become either |00⟩ or |11⟩,
-    while |01⟩ and |10⟩ rarely appear.
+    while |01⟩ and |10⟩ never appear.
   </p>
 
   <p>
