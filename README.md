@@ -180,6 +180,29 @@ The simulator demonstrates:
 - [Vue.js](https://vuejs.org/)
 - [Vue Router](https://router.vuejs.org/)
   
+### Library Versions
+
+Vue and Vue Router are loaded from the jsDelivr CDN at exact, pinned versions:
+
+| Library | Version |
+|---|---|
+| Vue | 3.5.44 |
+| Vue Router | 4.6.4 |
+
+Each script tag in `index.html` also carries a Subresource Integrity (`integrity`) hash, so the browser only runs the exact file that was tested.
+
+To upgrade a library:
+
+1. Change the version number in its URL in `index.html`
+2. Compute the new hash:
+
+   ```bash
+   curl -sL <script-url> | openssl dgst -sha384 -binary | base64
+   ```
+
+3. Replace the `integrity` value with `sha384-` followed by that hash
+4. Test the simulator and the User Manual before publishing
+
 ### Browser APIs
 
 - Web Workers
