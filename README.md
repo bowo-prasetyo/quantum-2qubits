@@ -144,7 +144,7 @@ while:
 - |01⟩
 - |10⟩
 
-rarely appear.
+never appear.
 
 ---
 
