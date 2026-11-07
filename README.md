@@ -1,3 +1,9 @@
+> **This simulator has moved to [Quantum Lab](https://bowo-prasetyo.github.io/quantum-lab/).**
+> Quantum Lab merges the 1-, 2- and 3-qubit simulators into one app with a guided lesson path
+> ([repository](https://github.com/bowo-prasetyo/quantum-lab)).
+> The old address now redirects to the 2-qubit lab, and saved states are brought over automatically.
+> This repository is kept for its history.
+
 # 2 Qubits Quantum Simulator
 
 A minimal client-side quantum computer simulator built with modern browser technologies.
