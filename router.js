@@ -56,6 +56,7 @@ const Home = {
       
         <h3>Qubit 0</h3>
       
+        <button @click="applyGate('I', 0)">I</button>
         <button @click="applyGate('H', 0)">H</button>
         <button @click="applyGate('X', 0)">X</button>
         <button @click="applyGate('Y', 0)">Y</button>
@@ -65,6 +66,7 @@ const Home = {
       
         <h3>Qubit 1</h3>
       
+        <button @click="applyGate('I', 1)">I</button>
         <button @click="applyGate('H', 1)">H</button>
         <button @click="applyGate('X', 1)">X</button>
         <button @click="applyGate('Y', 1)">Y</button>
@@ -128,6 +130,8 @@ const Home = {
           The simulator can generate:
           (|00⟩ + |11⟩) / √2
           using a Hadamard gate followed by a CNOT gate.
+          The Bell State button does this in one step:
+          it starts from |00⟩, applies H to qubit 0, then applies CNOT.
         </p>
       
         <p>
@@ -203,8 +207,7 @@ const Home = {
   data() {
     return {
       state: initialState(),
-      measurement: '-',
-      worker: null
+      measurement: '-'
     };
   },
 
@@ -222,83 +225,134 @@ const Home = {
     }
   },
 
-  async mounted() {
+  created() {
+    // Every operation (gate, CNOT, measure, reset, Bell state) runs through
+    // this queue, one at a time. Each one starts only after the previous
+    // result has come back from the worker, so it always works on the
+    // latest state, however fast the buttons are pressed.
+    this.queue = Promise.resolve();
+    this.pendingResolve = null;
+
     this.worker = new Worker('./worker.js');
 
-    this.worker.onmessage = async (e) => {
-      const msg = e.data;
-
-      if (msg.type === 'state') {
-        this.state = msg.state;
-      }
-
-      if (msg.type === 'measurement') {
-        this.measurement = basisLabel(msg.measured);
-        this.state = msg.state;
-      }
-
-      await window.db.saveState(this.state);
-      this.draw();
+    // The worker answers each request with exactly one message.
+    this.worker.onmessage = (e) => {
+      this.settleWorkerRequest(e.data);
     };
 
-    const saved = await window.db.loadState();
+    // If the worker throws, release the waiting request so the queue
+    // does not get stuck.
+    this.worker.onerror = (e) => {
+      console.error('Quantum worker error:', e.message);
+      this.settleWorkerRequest(null);
+    };
+  },
 
-    if (isValidState(saved)) {
-      this.state = saved;
-    } else if (saved) {
-      // Discard unusable saved data and start from |00⟩.
-      await window.db.saveState(this.state);
-    }
+  mounted() {
+    this.enqueue(async () => {
+      const saved = await window.db.loadState();
 
-    this.draw();
+      if (isValidState(saved)) {
+        this.state = saved;
+      } else if (saved) {
+        // Discard unusable saved data and start from |00⟩.
+        await window.db.saveState(this.state);
+      }
+
+      this.draw();
+    });
+  },
+
+  beforeUnmount() {
+    this.worker.terminate();
   },
 
   methods: {
-    createBellState() {
-    
-      this.applyGate('H', 0);
-    
-      setTimeout(() => {
-        this.applyCNOT();
-      }, 50);
+    // Adds a task to the end of the operation queue. A failed task is
+    // logged and does not block the tasks after it.
+    enqueue(task) {
+      this.queue = this.queue
+        .then(task)
+        .catch(err => console.error(err));
+
+      return this.queue;
+    },
+
+    settleWorkerRequest(result) {
+      const resolve = this.pendingResolve;
+      this.pendingResolve = null;
+
+      if (resolve) resolve(result);
+    },
+
+    // Sends the current state to the worker, waits for its answer,
+    // then stores, saves and draws the new state.
+    async runOnWorker(message) {
+      const msg = await new Promise(resolve => {
+        this.pendingResolve = resolve;
+
+        this.worker.postMessage({
+          ...message,
+          state: structuredClone(Vue.toRaw(this.state))
+        });
+      });
+
+      if (!msg) return;
+
+      if (msg.type === 'measurement') {
+        this.measurement = basisLabel(msg.measured);
+      }
+
+      this.state = msg.state;
+
+      await window.db.saveState(this.state);
+
+      this.draw();
+    },
+
+    applyGate(gate, targetQubit) {
+      return this.enqueue(() => this.runOnWorker({
+        type: 'gate',
+        gate,
+        targetQubit
+      }));
     },
 
     applyCNOT() {
-    
-      const plainState = structuredClone(
-        Vue.toRaw(this.state)
-      );
-    
-      this.worker.postMessage({
-        type: 'cnot',
-        state: plainState
-      });
+      return this.enqueue(() => this.runOnWorker({
+        type: 'cnot'
+      }));
     },
-    
-    applyGate(gate, targetQubit) {
-    
-      const plainState = structuredClone(
-        Vue.toRaw(this.state)
-      );
-    
-      this.worker.postMessage({
-        type: 'gate',
-        gate,
-        targetQubit,
-        state: plainState
-      });
-    },
-    
+
     measure() {
-      const plainState = structuredClone(Vue.toRaw(this.state));
-    
-      this.worker.postMessage({
-        type: 'measure',
-        state: plainState
+      return this.enqueue(() => this.runOnWorker({
+        type: 'measure'
+      }));
+    },
+
+    reset() {
+      return this.enqueue(() => this.resetState());
+    },
+
+    // Builds (|00⟩ + |11⟩) / √2: start from |00⟩, apply H to qubit 0,
+    // then CNOT. Each step waits for the previous one to finish.
+    createBellState() {
+      return this.enqueue(async () => {
+        await this.resetState();
+
+        await this.runOnWorker({
+          type: 'gate',
+          gate: 'H',
+          targetQubit: 0
+        });
+
+        await this.runOnWorker({
+          type: 'cnot'
+        });
       });
     },
-        
-    async reset() {
+
+    async resetState() {
       this.state = initialState();
 
       this.measurement = '-';
@@ -306,7 +360,6 @@ const Home = {
       await window.db.saveState(this.state);
 
       this.draw();
-
     },
 
     draw() {
